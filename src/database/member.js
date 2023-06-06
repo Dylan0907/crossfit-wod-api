@@ -72,7 +72,6 @@ const createNewMember = (newMember) => {
 }
 
 const deleteOneMember = (memberId) => {
-    
     try {
         const indexMember =
         DB.members.findIndex((member) => member.id === memberId)
@@ -86,8 +85,7 @@ const deleteOneMember = (memberId) => {
         saveToDatabase(DB)
     } catch (error) {
         throw { status: 500, message: error?.message || error };
-    }
-    
+    }   
 }
 
 module.exports = {
