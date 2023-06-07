@@ -1,15 +1,17 @@
 const express = require ("express")
 
+const membersController = require("../../controllers/membersController")
+
 const router = express.Router();
 
-router.get("/", (req,res) => res.send("<p>Members</p>"))
+router.get("/", membersController.getAllMembers)
 
-router.get("/:memberId", (req,res) => res.send("<p>Member</p>"))
+router.get("/:memberId", membersController.getOneMember)
 
-router.patch("/:memberId", (req,res) => res.send("<p>Member update</p>"))
+router.patch("/:memberId", membersController.updateOneMember)
 
-router.post("/", (req,res) => res.send("<p>Member creation</p>"))
+router.post("/", membersController.createNewMember)
 
-router.delete("/:memberId", (req,res) => res.send("<p>Member deletion</p>"))
+router.delete("/:memberId",membersController.deleteOneMember)
 
 module.exports = router;
