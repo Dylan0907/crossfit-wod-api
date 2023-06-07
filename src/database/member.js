@@ -18,7 +18,7 @@ const getAllMembers = (filterParams) => {
 const getOneMember = (memberId) => {
     try {
         const oneMember =
-        DB.workouts.find((member) => member.id === memberId)
+        DB.members.find((member) => member.id === memberId)
         if (!oneMember) {
             throw {
                 status: 400,

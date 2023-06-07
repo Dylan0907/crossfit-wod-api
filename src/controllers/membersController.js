@@ -29,7 +29,7 @@ const getOneMember = (req, res) => {
               })
     }
     try {
-      const member = membersService.getOneMember (memberId)
+      const member = membersService.getOneMember(memberId)
       res.send({ status: "OK", data: member });
     } catch (error) {
       res
