@@ -1,8 +1,8 @@
 const express = require ("express");
 const bodyParser = require ("body-parser")
 const apicache = require ("apicache")
-const v1WorkoutRouter = require ("./v1/routes/workoutRoutes")
-const v1MembersRouter = require ("./v1/routes/membersRoutes")
+const v1WorkoutRouter = require ("./routes/workoutRoutes")
+const v1MembersRouter = require ("./routes/membersRoutes")
 const { swaggerDocs: V1SwaggerDocs } = require("./swagger");
 
 const app = express();
@@ -20,3 +20,7 @@ app.listen (PORT, () => {
     console.log (`API is listening on port ${PORT}`)
     V1SwaggerDocs(app, PORT);
 })
+
+module.exports = {
+    app
+}

@@ -1,6 +1,6 @@
 const express = require ("express")
 
-const membersController = require("../../controllers/membersController")
+const membersController = require("../controllers/membersController")
 
 const router = express.Router();
 
