@@ -1,4 +1,5 @@
 const express = require ("express");
+const mongoose = require('mongoose');
 const bodyParser = require ("body-parser")
 const apicache = require ("apicache")
 const v1WorkoutRouter = require ("./routes/workoutRoutes")
