@@ -1,5 +1,6 @@
 const express = require ("express");
 const mongoose = require('mongoose');
+require('dotenv').config();
 const bodyParser = require ("body-parser")
 const apicache = require ("apicache")
 const v1WorkoutRouter = require ("./routes/workoutRoutes")
@@ -7,10 +8,23 @@ const v1MembersRouter = require ("./routes/membersRoutes")
 const { swaggerDocs: V1SwaggerDocs } = require("./swagger");
 
 const app = express();
+const mongoString = process.env.DATABASE_URL
 const PORT = process.env.PORT || 3000;
 const cache = apicache.middleware;
 
-app.use(cache("2 minutes"))
+
+mongoose.connect(mongoString);
+const database = mongoose.connection
+
+database.on('error', (error) => {
+    console.log(error)
+})
+
+database.once('connected', () => {
+    console.log('Database Connected');
+})
+
+app.use(cache("1 minutes"))
 app.use(bodyParser.json())
 
 //Endpoints

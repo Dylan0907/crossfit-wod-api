@@ -1,10 +1,10 @@
 const membersService = require ("../services/membersService")
 
 
-const getAllMembers = (req, res) => {
+const getAllMembers = async (req, res) => {
     const {mode} = req.query
     try {
-      const allMembers = membersService.getAllMembers({mode})
+      const allMembers = await membersService.getAllMembers({mode})
       res.send({ status: "OK", data: allMembers });
     } catch (error) {
       res
@@ -13,7 +13,7 @@ const getAllMembers = (req, res) => {
     }
 };
 
-const getOneMember = (req, res) => {
+const getOneMember = async (req, res) => {
     const {
       params:{memberId}
     } = req
@@ -29,7 +29,7 @@ const getOneMember = (req, res) => {
               })
     }
     try {
-      const member = membersService.getOneMember(memberId)
+      const member = await membersService.getOneMember(memberId)
       res.send({ status: "OK", data: member });
     } catch (error) {
       res
@@ -38,7 +38,7 @@ const getOneMember = (req, res) => {
     }
 };
 
-const createNewMember = (req, res) => {
+const createNewMember = async (req, res) => {
     const {body} = req;
     if ( !body.name ||
       !body.gender ||
@@ -63,7 +63,7 @@ const createNewMember = (req, res) => {
       password: body.password
     }
     try {
-      const createdMember = membersService.createNewMember(newMember);
+      const createdMember = await membersService.createNewMember(newMember);
       res.status(201).send({ status: "OK", data: createdMember });
     } catch (error) {
       res
@@ -72,7 +72,7 @@ const createNewMember = (req, res) => {
     }
   };
   
-  const updateOneMember = (req, res) => {
+  const updateOneMember = async (req, res) => {
     const {
       body,
       params: {memberId}
@@ -89,7 +89,7 @@ const createNewMember = (req, res) => {
               })
     }
     try {
-      const updatedMember = membersService.updateOneMember (body, memberId)
+      const updatedMember = await membersService.updateOneMember (body, memberId)
       res.send({status:"Ok", data: updatedMember});
     } catch (error) {
       res
@@ -98,7 +98,7 @@ const createNewMember = (req, res) => {
     }   
   };
   
-  const deleteOneMember = (req, res) => {
+  const deleteOneMember = async (req, res) => {
     const {
       params:{memberId}
     } = req
@@ -114,7 +114,7 @@ const createNewMember = (req, res) => {
               })
     }
     try {
-      membersService.deleteOneMember (memberId)
+      await membersService.deleteOneMember (memberId)
       res.status(204).send({ status: "OK"});
     } catch (error) {
       res

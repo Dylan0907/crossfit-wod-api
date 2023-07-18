@@ -1,50 +1,53 @@
 const members = require ("../database/member")
-
+const Members = require ("../database/memberModel")
 const {v4:uuid} = require ("uuid")
 
-const getAllMembers = (filterParams) => { 
+const getAllMembers = async (filterParams) => { 
     try {
-        const allMembers = members.getAllMembers (filterParams)
+        const allMembers =  await Members.find ()
         return allMembers
     } catch (error) {
         throw error
     }
 }
 
-const getOneMember = (memberId) => {
+const getOneMember = async (memberId) => {
     try {
-        const oneMember = members.getOneMember(memberId)
+        const oneMember = await Members.findById(memberId)
         return oneMember
     } catch (error) {
         throw error
     }
 }
 
-const createNewMember = (newMember) => {
-    const memberToInsert = {
-        ...newMember,
-        id: uuid()
-    }
+const createNewMember = async (newMember) => {
+    const memberToInsert = new Members ({
+        ...newMember
+    })
     try {
-        const createdNewMember = members.createNewMember(memberToInsert)
-        return createdNewMember
+        const newMember = await memberToInsert.save();
+        return newMember
     } catch (error) {
         throw error
     }
 }
 
-const updateOneMember = (memberToUpdate, memberId) => {
+const updateOneMember = async (memberToUpdate, memberId) => {
     try {
-        const modifiedMember = members.updateOneMember(memberToUpdate, memberId)
+        const modifiedMember = await Members.updateOne(
+            {_id: memberId},
+            {$set: memberToUpdate}
+            )
         return modifiedMember
     } catch (error) {
         throw error
     }
 }
 
-const deleteOneMember = (memberId) => {
+const deleteOneMember = async (memberId) => {
     try {
-        members.deleteOneMember(memberId)
+       const deletedMember = await Members.findByIdAndDelete(memberId)
+       return deletedMember
     } catch (error) {
         throw error
     }
