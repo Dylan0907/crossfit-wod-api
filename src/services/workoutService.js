@@ -1,34 +1,31 @@
-const workout = require ("../database/workout")
+const Workouts = require ("../database/workoutModel")
 
-const {v4:uuid} = require ("uuid")
-
-const getAllWorkouts = (filterParams) => { 
+const getAllWorkouts = async (filterParams) => { 
     try {
-        const allWorkouts = workout.getAllWorkouts (filterParams)
+        const allWorkouts = await Workouts.find ()
         return allWorkouts
     } catch (error) {
         throw error
     }
 }
 
-const getOneWorkOut = (workoutId) => {
+const getOneWorkOut = async (workoutId) => {
     try {
-        const oneWorkout = workout.getOneWorkout(workoutId)
+        const oneWorkout = await Workouts.findById(workoutId)
         return oneWorkout
     } catch (error) {
         throw error
     }
 }
 
-const createNewWorkout = (newWorkout) => {
-    const workoutToInsert = {
+const createNewWorkout = async (newWorkout) => {
+    const workoutToInsert = new Workouts ({
         ...newWorkout,
-        id: uuid(),
         createdAt: new Date().toLocaleString("en-US", {timezone: "UTC"}),
         updatedAt: new Date().toLocaleString("en-US", {timezone: "UTC"})
-    }
+    })
     try {
-        const createdNewWorkout = workout.createNewWorkout(workoutToInsert)
+        const createdNewWorkout = await workoutToInsert.save()
         return createdNewWorkout
     } catch (error) {
         throw error
@@ -36,20 +33,25 @@ const createNewWorkout = (newWorkout) => {
     
 }
 
-const updateOneWorkout = (workoutToUpdate, workoutId) => {
-    
+const updateOneWorkout = async (workoutToUpdate, workoutId) => {
     try {
-        const modifiedWorkOut = workout.updateOneWorkout(workoutToUpdate, workoutId)
+        const modifiedWorkOut = await Workouts.updateOne(
+            {_id: workoutId},
+            {$set: {
+                ...workoutToUpdate,
+                updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
+            }}
+            )
         return modifiedWorkOut
     } catch (error) {
         throw error
     }
 }
 
-const deleteOneWorkout = (workoutId) => {
-    
+const deleteOneWorkout = async (workoutId) => {
     try {
-        workout.deleteOneWorkout(workoutId)
+       const deletedWorkout = await Workouts.findOneAndDelete(workoutId)
+       return deletedWorkout;
     } catch (error) {
         throw error
     }

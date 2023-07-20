@@ -1,4 +1,3 @@
-const members = require ("../database/member")
 const Members = require ("../database/memberModel")
 const {v4:uuid} = require ("uuid")
 

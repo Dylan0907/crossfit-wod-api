@@ -24,7 +24,7 @@ database.once('connected', () => {
     console.log('Database Connected');
 })
 
-app.use(cache("1 minutes"))
+//app.use(cache("1 minutes"))
 app.use(bodyParser.json())
 
 //Endpoints

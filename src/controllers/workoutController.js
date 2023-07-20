@@ -1,9 +1,9 @@
 const workoutService = require ("../services/workoutService")
 
-const getAllWorkouts = (req, res) => {
+const getAllWorkouts = async (req, res) => {
   const {mode} = req.query
   try {
-    const allWorkouts = workoutService.getAllWorkouts({mode})
+    const allWorkouts = await workoutService.getAllWorkouts({mode})
     res.send({ status: "OK", data: allWorkouts });
   } catch (error) {
     res
@@ -12,7 +12,7 @@ const getAllWorkouts = (req, res) => {
   }
 };
   
-  const getOneWorkout = (req, res) => {
+  const getOneWorkout = async (req, res) => {
     const {
       params:{workoutId}
     } = req
@@ -28,7 +28,7 @@ const getAllWorkouts = (req, res) => {
               })
     }
     try {
-      const workout = workoutService.getOneWorkOut (workoutId)
+      const workout = await workoutService.getOneWorkOut (workoutId)
       res.send({ status: "OK", data: workout });
     } catch (error) {
       res
@@ -37,7 +37,7 @@ const getAllWorkouts = (req, res) => {
     }
   };
   
-  const createNewWorkout = (req, res) => {
+  const createNewWorkout = async (req, res) => {
     const {body} = req;
     if ( !body.name ||
       !body.mode ||
@@ -62,7 +62,7 @@ const getAllWorkouts = (req, res) => {
       trainerTips: body.trainerTips
     }
     try {
-      const createdWorkout = workoutService.createNewWorkout(newWorkout);
+      const createdWorkout = await workoutService.createNewWorkout(newWorkout);
       res.status(201).send({ status: "OK", data: createdWorkout });
     } catch (error) {
       res
@@ -71,7 +71,7 @@ const getAllWorkouts = (req, res) => {
     }
   };
   
-  const updateOneWorkout = (req, res) => {
+  const updateOneWorkout = async (req, res) => {
     const {
       body,
       params: {workoutId}
@@ -88,7 +88,7 @@ const getAllWorkouts = (req, res) => {
               })
     }
     try {
-      const updatedWorkout = workoutService.updateOneWorkout (body, workoutId)
+      const updatedWorkout = await  workoutService.updateOneWorkout (body, workoutId)
       res.send({status:"Ok", data: updatedWorkout});
     } catch (error) {
       res
@@ -97,7 +97,7 @@ const getAllWorkouts = (req, res) => {
     }   
   };
   
-  const deleteOneWorkout = (req, res) => {
+  const deleteOneWorkout = async (req, res) => {
     const {
       params:{workoutId}
     } = req
@@ -113,7 +113,7 @@ const getAllWorkouts = (req, res) => {
               })
     }
     try {
-      workoutService.deleteOneWorkout (workoutId)
+      await  workoutService.deleteOneWorkout (workoutId)
       res.status(204).send({ status: "OK"});
     } catch (error) {
       res
