@@ -103,6 +103,10 @@ router.get ("/:workoutId", workoutController.getOneWorkout);
 
 router.get("/:workoutId/records", recordController.getRecordForWorkout);
 
+router.post ("/records", recordController.createNewRecord)
+
+router.delete("/:workoutId/records", recordController.deleteOneRecord)
+
 router.post ("/",workoutController.createNewWorkout)
 
 router.patch ("/:workoutId", workoutController.updateOneWorkout)
